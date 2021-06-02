@@ -22,7 +22,7 @@ namespace Travel.Controllers
 
     // GET: api/Places
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Place>>> Get(string reviews, string country)
+    public async Task<ActionResult<IEnumerable<Place>>> Get(string reviews, string country, string name)
     {
       var query = _db.Places.AsQueryable();
 
@@ -34,6 +34,10 @@ namespace Travel.Controllers
       {
         query = query.Where(entry => entry.Country == country);
       }
+      if (name != null)
+      {
+        query = query.Where(entry => entry.Name == name);
+      }   
 
       return await query.ToListAsync();
     }
